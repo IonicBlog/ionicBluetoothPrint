@@ -7,22 +7,28 @@
 </ion-header>
 
 <ion-content padding>
-  Printer Selected:
+
+    <button ion-item (tap)="scan()">
+        扫描设备
+      </button>
+      <ion-item *ngFor="let item of devices" (tap)="selectDevice(item)">
+          {{item}}
+        </ion-item>
+
+      <span>--------分割线--------</span><br>
+  请选择打印设备
+  <ion-list>
+    <ion-item *ngFor="let item of printerList" (tap)="select(item)">
+      {{item.name}} {{item.id}}
+    </ion-item>
+  </ion-list>
   <ion-item>{{selectedPrinter.name}}</ion-item>
   <ion-item>
-    <button ion-item (tap)="listBTDevice()">
-      Select Printer
+    <button ion-item (tap)="testPrinter()">
+      测试打印
     </button>
   </ion-item>
-<ion-item>
-  <button ion-item (tap)="testConnectPrinter()">
-    Test Connection
-  </button>
-</ion-item>
-<ion-item>
-  <button ion-item (tap)="testPrinter()">
-    Test Print
-  </button>
-</ion-item>
 
+ 
+  
 </ion-content>
