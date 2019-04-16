@@ -39,14 +39,9 @@ export class PrintProvider {
     // printData[2] = 0x43;
     // printData[3] = 0x44;
 
-    var printData = `你好 \n 你好 \n 你好 \n`
-    var finalReceipt = `“Welcome to” + ‘\x20’ + companyName + ‘\x0a’ + “Date:” + ‘\x20’ + this.datetime
-+ ‘\x0a’ + “Cashier:” + ‘\x20’ + cashierName + ‘\x0a’ + ‘\x0a’ + receiptItems + ‘\x0a’ + “Subtotal:” + ‘\x20’ + “$” + this.totalPayment + ‘\x0a’
-+ “GST:” + ‘\x20’ + “$” + gst + ‘\x0a’ + “Service Charge:” + ‘\x20’ + “$” + svc + ‘\x0a’
-+ “Total:”+ ‘\x20’ + “$” + val + ‘\x0a’ + “Amount Received:” + ‘\x20’ + “$” + this.amountReceived + ‘\x0a’ + “Change:”
-+ ‘\x20’ + “$” + this.change + ‘\x0a’ + “Payment Type:” + ‘\x20’ + this.paymentType + ‘\x0a’ + footer + ‘\x0a’+ ‘\x0a’`
+    var printData = '-hello中world-';
     let xyz = this.connectBT(address).subscribe(data => {
-      this.btSerial.write(finalReceipt).then(dataz => {
+      this.btSerial.write(printData).then(dataz => {
         console.log("WRITE SUCCESS", dataz);
 
         let mno = this.alertCtrl.create({

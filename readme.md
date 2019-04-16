@@ -1,3 +1,22 @@
+
+ionic cordova plugin add ../BluetoothSerial
+
+ionic cordova platform rm android
+
+ionic cordova platform add android@6
+
+ionic cordova build android
+
+
+adb install /Users/tonge/Repos/ionicBluetoothPrint/platforms/android/build/outputs/apk/debug/android-debug.apk
+
+
+
+ionic cordova run android
+
+
+
+
 # What is this?
 -This is an ionic 2+ app
 

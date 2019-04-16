@@ -82,5 +82,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.11" />
     <allow-navigation href="http://192.168.0.111:8100" sessionid="a442614c" />
+    <plugin name="cordova-plugin-bluetooth-serial" spec="../BluetoothSerial" />
     <engine name="android" spec="6.4.0" />
 </widget>
