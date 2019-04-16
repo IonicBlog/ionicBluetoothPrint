@@ -15,7 +15,6 @@ export class PrintProvider {
 
   connectBT(address) {
     return this.btSerial.connect(address);
-
   }
 
   testPrint(address) {

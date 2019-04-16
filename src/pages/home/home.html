@@ -8,14 +8,16 @@
 
 <ion-content padding>
 
-    <button ion-item (tap)="scan()">
-        扫描设备
-      </button>
-      <ion-item *ngFor="let item of devices" (tap)="selectDevice(item)">
-          {{item}}
-        </ion-item>
+  <button ion-item (tap)="scan()">
+    扫描设备
+  </button>
+ <!--
+  <ion-item *ngFor="let item of devices" (tap)="selectDevice(item)">
+    {{item}}
+  </ion-item>
 
-      <span>--------分割线--------</span><br>
+  <ion-item>--------分割线------- </ion-item>
+   -->
   请选择打印设备
   <ion-list>
     <ion-item *ngFor="let item of printerList" (tap)="select(item)">
@@ -29,6 +31,6 @@
     </button>
   </ion-item>
 
- 
-  
+
+
 </ion-content>

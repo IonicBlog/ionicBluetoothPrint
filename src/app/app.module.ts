@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {PrinterListModalPage} from '../pages/printer-list-modal/printer-list-modal';
 
 import { PrintProvider } from '../providers/print/print';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
@@ -14,8 +13,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    PrinterListModalPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -24,8 +22,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    PrinterListModalPage
+    HomePage
   ],
   providers: [
     StatusBar,
