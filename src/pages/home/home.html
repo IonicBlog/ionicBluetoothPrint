@@ -18,9 +18,35 @@
       {{item.name}} {{item.id}}
     </ion-item>
   </ion-list>
+  <ion-item>当前选择的设备：{{selectedPrinter.name}}</ion-item>
   <ion-item>
-    <button ion-item (tap)="testPrinter()">
-      测试打印{{selectedPrinter.name}}
+    <button ion-item (tap)="testPrinter(0)">
+      测试打印 hello world hello world
+    </button>
+  </ion-item>
+  <ion-item>
+    <button ion-item (tap)="testPrinter(1)">
+      测试打印 [186, 220, 222]
+    </button>
+  </ion-item>
+  <ion-item>
+    <button ion-item (tap)="testPrinter(2)">
+      测试打印 Uint8Array(4)
+    </button>
+  </ion-item>
+  <ion-item>
+    <button ion-item (tap)="testPrinter(3)">
+      测试打印 data.buffer
+    </button>
+  </ion-item>
+  <ion-item>
+    <button ion-item (tap)="testPrinter(4)">
+      测试打印 设置中文
+    </button>
+  </ion-item>
+  <ion-item>
+    <button ion-item (tap)="testPrinter(5)">
+      测试打印 打印中文
     </button>
   </ion-item>
 </ion-content>

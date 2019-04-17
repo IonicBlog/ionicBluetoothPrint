@@ -35,47 +35,37 @@ export class HomePage {
       console.log("Not able to connect", err);
     });
   }
+  success() {
 
-  testPrinter() {
+  }
+  failure() {
 
-    function success() {
+  }
+  testPrinter(tag) {
 
+    if (tag == 0) {
+      this.bluetoothSerial.write('hello world hello world').then(this.success, this.failure);
+    } else if (tag == 1) {
+      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
+    } else if (tag == 2) {
+      var data = new Uint8Array(4);
+      data[0] = 0x41;
+      data[1] = 0x42;
+      data[2] = 0x43;
+      data[3] = 0x44;
+      this.bluetoothSerial.write(data).then(this.success, this.failure);
+    } else if (tag == 3) {
+      this.bluetoothSerial.write(data.buffer).then(this.success, this.failure);
+    } else if (tag == 4) {
+      var printData = new Uint8Array(3);
+      printData[0] = 0x1B;
+      printData[1] = 0x52;
+      printData[2] = 0x0F;
+      this.bluetoothSerial.write(printData).then(this.success, this.failure);
+    } else if (tag == 5) {
+      this.bluetoothSerial.write('中文测试中文测试中文测试').then(this.success, this.failure);
     }
-    function failure() {
 
-    }
-    this.bluetoothSerial.write('hello world hello world').then(success, failure);
-
-    this.bluetoothSerial.write([186, 220, 222]).then(success, failure);
-
-    var data = new Uint8Array(4);
-    data[0] = 0x41;
-    data[1] = 0x42;
-    data[2] = 0x43;
-    data[3] = 0x44;
-    this.bluetoothSerial.write(data).then(success, failure);
-
-    this.bluetoothSerial.write(data.buffer).then(success, failure);
-
-    // //设置中文指令
-    var printData = new Uint8Array(3);
-    printData[0] = 0x1B;
-    printData[1] = 0x52;
-    printData[2] = 0x0F;
-    this.bluetoothSerial.write(printData).then(success, failure);
-
-    // this.printProvider.print('中文测试');
-    // //指令换行
-    // printData = new Uint8Array(1);
-    // printData[0] = 10;
-    // this.printProvider.print(printData);
-    // this.printProvider.print("!@#$%^&*()_+")
-    // this.printProvider.print("1234567890")
-    // this.printProvider.print("\n");
-    // this.printProvider.print("abcdefghijklmnopqrstuvwxyz")
-
-
-    // this.printProvider.print("\n");
   }
 
 
