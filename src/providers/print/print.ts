@@ -17,7 +17,7 @@ export class PrintProvider {
     return this.btSerial.connect(address);
   }
 
-  testPrint(address) {
+  print(data) {
     // let printData = `销售单 \n
     // 单据编号：201904150954001\n
     // 日期：2019年04月15日 09:54:21 \n
@@ -39,30 +39,20 @@ export class PrintProvider {
     // printData[2] = 0x43;
     // printData[3] = 0x44;
 
-    var printData = '-hello中world-';
-    let xyz = this.connectBT(address).subscribe(data => {
-      this.btSerial.write(printData).then(dataz => {
-        console.log("WRITE SUCCESS", dataz);
+    this.btSerial.write(data).then(dataz => {
+      console.log("WRITE SUCCESS", dataz);
 
-        let mno = this.alertCtrl.create({
-          title: "打印中,请稍后...",
-          buttons: ['好的']
-        });
-        mno.present();
+      // let mno = this.alertCtrl.create({
+      //   title: "打印中,请稍后...",
+      //   buttons: ['好的']
+      // });
+      // mno.present();
 
-        xyz.unsubscribe();
-      }, errx => {
-        console.log("WRITE FAILED", errx);
-        let mno = this.alertCtrl.create({
-          title: "ERROR " + errx,
-          buttons: ['Dismiss']
-        });
-        mno.present();
-      });
-    }, err => {
-      console.log("CONNECTION ERROR", err);
+      // xyz.unsubscribe();
+    }, errx => {
+      console.log("WRITE FAILED", errx);
       let mno = this.alertCtrl.create({
-        title: "ERROR " + err,
+        title: "ERROR " + errx,
         buttons: ['Dismiss']
       });
       mno.present();
@@ -70,32 +60,6 @@ export class PrintProvider {
 
   }
 
-  stringToByte(str) {
-    var bytes = new Array();
-    var len, c;
-    len = str.length;
-    for (var i = 0; i < len; i++) {
-      c = str.charCodeAt(i);
-      if (c >= 0x010000 && c <= 0x10FFFF) {
-        bytes.push(((c >> 18) & 0x07) | 0xF0);
-        bytes.push(((c >> 12) & 0x3F) | 0x80);
-        bytes.push(((c >> 6) & 0x3F) | 0x80);
-        bytes.push((c & 0x3F) | 0x80);
-      } else if (c >= 0x000800 && c <= 0x00FFFF) {
-        bytes.push(((c >> 12) & 0x0F) | 0xE0);
-        bytes.push(((c >> 6) & 0x3F) | 0x80);
-        bytes.push((c & 0x3F) | 0x80);
-      } else if (c >= 0x000080 && c <= 0x0007FF) {
-        bytes.push(((c >> 6) & 0x1F) | 0xC0);
-        bytes.push((c & 0x3F) | 0x80);
-      } else {
-        bytes.push(c & 0xFF);
-      }
-    }
-    return bytes;
-
-
-  }
 
 
 
