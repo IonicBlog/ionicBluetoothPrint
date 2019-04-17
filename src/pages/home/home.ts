@@ -43,48 +43,46 @@ export class HomePage {
   }
   testPrinter(tag) {
     if (tag == 0) {
-      console.log('hello world')
-      this.bluetoothSerial.write('hello world hello world hello world hello world').then(this.success, this.failure);
-    } else if (tag == 1) {
-      console.log('[186, 220, 222]')
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-      this.bluetoothSerial.write([186, 220, 222]).then(this.success, this.failure);
-    } else if (tag == 2) {
-      var data = new Uint8Array(4);
-      data[0] = 0x41;
-      data[1] = 0x42;
-      data[2] = 0x43;
-      data[3] = 0x44;
-      console.log(data)
-      this.bluetoothSerial.write(data).then(this.success, this.failure);
-    } else if (tag == 3) {
-      console.log(data.buffer)
-      this.bluetoothSerial.write(data.buffer).then(this.success, this.failure);
-    } else if (tag == 4) {
-      var printData = new Uint8Array(3);
-      printData[0] = 0x1B;
-      printData[1] = 0x52;
-      printData[2] = 0x0F;
-      this.bluetoothSerial.write(printData).then(this.success, this.failure);
-      // var printData1 = [28, 38]
-      // this.bluetoothSerial.write(printData1).then(this.success, this.failure);
-    } else if (tag == 5) {
-      console.log('中文测试中文测试中文测试')
-      //执行了这个之后，下面那个send也会乱码
-      this.bluetoothSerial.write('中文测试中文测试中文测试中文测试中文测试中文测试').then(this.success, this.failure);
-      // this.bluetoothSerial.write(this.stringToBytes('中文测试中文测试中文测试中文测试中文测试中文测试')).then(this.success, this.failure);
-    }
-    else if (tag == 6) {
-      console.log('send中文测试中文测试中文测试')
-      this.bluetoothSerial.send('中文测试中文测试中文测试中文测试中文测试中文测试').then(this.success, this.failure);
+      //居中      
+      var format = new Uint8Array(4);
+      format[0] = 27;
+      format[1] = 97;
+      format[2] = 1;
+      format[3] = 49;
+      this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+      //放大
+      format = new Uint8Array(3);
+      format[0] = 29;
+      format[1] = 33;
+      format[2] = 1;
+      this.bluetoothSerial.write(format).then(this.success, this.failure);
+      this.bluetoothSerial.send('销售单').then(this.success, this.failure);
+
+      //还原放大
+      format[2] = 0;
+      this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+      //还原对齐方式
+      format = new Uint8Array(3);
+      format[0] = 27;
+      format[1] = 97;
+      format[2] = 0;
+      this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+      let printData = `
+    单据编号：201904150954001\n
+    日期：2019年04月15日 09:54:21 \n
+    --------------------------------------------\n
+    品名\r\t数量\r\t单价\r\t金额\r\t单位 \n
+    商品1商品1商品1商品1商品1\r\t2\r\t20\r\t40\r\t个 \n
+    商品2\r\t2\r\t20\r\t40\r\t个 \n
+    --------------------------------------------\n
+    合计\r\t 数量：6\r\t 金额\r\t120.0元 \n
+    --------------------------------------------\n
+    备注： \n\n
+    `;
+      this.bluetoothSerial.send(printData).then(this.success, this.failure);
     }
 
   }

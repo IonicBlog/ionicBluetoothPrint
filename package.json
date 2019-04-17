@@ -25,8 +25,7 @@
     "@ionic-native/splash-screen": "4.4.0",
     "@ionic-native/status-bar": "4.4.0",
     "@ionic/storage": "2.1.3",
-    "cordova-android": "6.3.0",
-    "cordova-plugin-bluetooth-serial": "file:../cordova-plugin-bluetooth-serial",
+    "cordova-android": "6.4.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -37,7 +36,8 @@
     "mutable-buffer": "^2.1.1",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "cordova-plugin-bluetooth-serial": "file:../cordova-plugin-bluetooth-serial"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.5",
