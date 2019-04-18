@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -10,12 +11,16 @@ export class HomePage {
   printerList: any = [];
   devices: any = [];
 
-  constructor(private bluetoothSerial: BluetoothSerial) {
+  constructor(public platform: Platform, private bluetoothSerial: BluetoothSerial) {
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BluetoothPage');
+    this.platform.ready().then(() => {
+      this.scan();
+      this.testPrinter();
+    });
   }
 
   scan() {
@@ -31,6 +36,8 @@ export class HomePage {
     var id = this.selectedPrinter.id;
     this.bluetoothSerial.connect(id).subscribe(data => {
       console.log("Connect " + data)
+      this.testPrinter();
+
     }, err => {
       console.log("Not able to connect", err);
     });
@@ -41,49 +48,148 @@ export class HomePage {
   failure(data) {
     console.log('failure:' + data)
   }
-  testPrinter(tag) {
-    if (tag == 0) {
-      //居中      
-      var format = new Uint8Array(4);
-      format[0] = 27;
-      format[1] = 97;
-      format[2] = 1;
-      format[3] = 49;
-      this.bluetoothSerial.write(format).then(this.success, this.failure);
+  testPrinter() {
 
-      //放大
-      format = new Uint8Array(3);
-      format[0] = 29;
-      format[1] = 33;
-      format[2] = 1;
-      this.bluetoothSerial.write(format).then(this.success, this.failure);
-      this.bluetoothSerial.send('销售单').then(this.success, this.failure);
+    // //  初始化打印机
+    // var format = new Uint8Array(2);
+    // format[0] = 27;
+    // format[1] = 64;
+    // this.bluetoothSerial.write(format).then(this.success, this.failure);
 
-      //还原放大
-      format[2] = 0;
-      this.bluetoothSerial.write(format).then(this.success, this.failure);
+     //  标准模式
+     var format = new Uint8Array(1);
+     format[0] = 12;
+     this.bluetoothSerial.write(format).then(this.success, this.failure);
 
-      //还原对齐方式
-      format = new Uint8Array(3);
-      format[0] = 27;
-      format[1] = 97;
-      format[2] = 0;
-      this.bluetoothSerial.write(format).then(this.success, this.failure);
+    //居中      
+    format = new Uint8Array(4);
+    format[0] = 27;
+    format[1] = 97;
+    format[2] = 1;
+    format[3] = 49;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
 
-      let printData = `
-    单据编号：201904150954001\n
-    日期：2019年04月15日 09:54:21 \n
-    --------------------------------------------\n
-    品名\r\t数量\r\t单价\r\t金额\r\t单位 \n
-    商品1商品1商品1商品1商品1\r\t2\r\t20\r\t40\r\t个 \n
-    商品2\r\t2\r\t20\r\t40\r\t个 \n
-    --------------------------------------------\n
-    合计\r\t 数量：6\r\t 金额\r\t120.0元 \n
-    --------------------------------------------\n
-    备注： \n\n
-    `;
-      this.bluetoothSerial.send(printData).then(this.success, this.failure);
-    }
+    //放大
+    format = new Uint8Array(3);
+    format[0] = 29;
+    format[1] = 33;
+    format[2] = 1;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('销售订单').then(this.success, this.failure);
+
+    // 还原放大
+    format[2] = 0;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    //还原对齐方式
+    format = new Uint8Array(3);
+    format[0] = 27;
+    format[1] = 97;
+    format[2] = 0;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    this.bluetoothSerial.send('No:201904150954001').then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    format = new Uint8Array(3);
+    format[0] = 27;
+    this.bluetoothSerial.send('Date:' + new Date().toLocaleString()).then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('--------------------------------------------').then(this.success, this.failure);
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    this.bluetoothSerial.send('品名\r\t单价\r\t数量\r\t金额').then(this.success, this.failure);
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    this.bluetoothSerial.send('商品名称\r\t19.8\r\t2箱\r\t33.6').then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    this.bluetoothSerial.send('商品名称\r\t49\r\t2个\r\t98').then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('--------------------------------------------').then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    //右对齐      
+    format = new Uint8Array(4);
+    format[0] = 27;
+    format[1] = 97;
+    format[2] = 2;
+    format[3] = 50;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('数量：4').then(this.success, this.failure);
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('金额：131.6').then(this.success, this.failure);
+
+    //还原对齐方式
+    format = new Uint8Array(3);
+    format[0] = 27;
+    format[1] = 97;
+    format[2] = 0;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('--------------------------------------------').then(this.success, this.failure);
+
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    this.bluetoothSerial.send('备注 ').then(this.success, this.failure);
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    //换行
+    format = new Uint8Array(1);
+    format[0] = 10;
+    this.bluetoothSerial.write(format).then(this.success, this.failure);
+    // // 切纸
+    // format = new Uint8Array(3);
+    // format[0] = 29;
+    // format[1] = 86;
+    // format[2] = 66;
+    // this.bluetoothSerial.write(format).then(this.success, this.failure);
 
   }
 
