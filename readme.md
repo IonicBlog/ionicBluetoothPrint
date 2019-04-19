@@ -58,3 +58,10 @@ https://ionicframework.com/docs/native/bluetooth-serial/
 Bitcoin: 1Bd2e8NjjGMTzULcFLQgQVFpAvUu15FJUC
 
 Paypal: http://paypal.me/razmansarit
+
+
+/Users/eliteenergy/Repos/ionicBluetoothPrint/plugins/cordova-plugin-bluetooth-serial/src/android/com/megster/cordova/BluetoothSerial.java
+
+/Users/eliteenergy/Repos/ionicBluetoothPrint/plugins/cordova-plugin-bluetooth-serial/www/bluetoothSerial.js
+
+以上两个路径代码中都有转码都方法，对比区别
